@@ -4,7 +4,9 @@
 
 ## Скачать
 
-Готовые сборки публикуются в разделе [Releases](https://github.com/LuukeDonate/void-hunters-russian/releases). Публичный архив v3.1 готовится к публикации.
+[**Скачать русификатор v3.1 для Windows (ZIP)**](https://github.com/LuukeDonate/void-hunters-russian/releases/download/v3.1/Void_Hunters_Luuke_Launcher_v3.1.zip)
+
+[Описание релиза v3.1](https://github.com/LuukeDonate/void-hunters-russian/releases/tag/v3.1) · [Все версии](https://github.com/LuukeDonate/void-hunters-russian/releases)
 
 Поддерживаемый клиент для v3.1 — Windows 10/11 x64, билд `4879d8511301`.
 
