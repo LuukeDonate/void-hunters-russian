@@ -1,14 +1,14 @@
 # Русификатор Void Hunters от Luuke
 
-Русификатор для ПК-версии Void Hunters. Установщик проверяет файлы игры, создаёт резервную копию и позволяет восстановить оригиналы. В версии 3.1 появилась кнопка **«Запустить игру»**.
+Русификатор для ПК-версии Void Hunters. Установщик проверяет файлы игры, создаёт резервную копию и позволяет восстановить оригиналы. В приложении есть кнопка **«Запустить игру»**.
 
 ## Скачать
 
-[**Скачать русификатор v3.1 для Windows (ZIP)**](https://github.com/LuukeDonate/void-hunters-russian/releases/download/v3.1/Void_Hunters_Luuke_Launcher_v3.1.zip)
+[**Скачать русификатор v3.2 для Windows (ZIP)**](https://github.com/LuukeDonate/void-hunters-russian/releases/download/v3.2/Void_Hunters_Luuke_Launcher_v3.2.zip)
 
-[Описание релиза v3.1](https://github.com/LuukeDonate/void-hunters-russian/releases/tag/v3.1) · [Все версии](https://github.com/LuukeDonate/void-hunters-russian/releases)
+[Описание релиза v3.2](https://github.com/LuukeDonate/void-hunters-russian/releases/tag/v3.2) · [Все версии](https://github.com/LuukeDonate/void-hunters-russian/releases)
 
-Поддерживаемый клиент для v3.1 — Windows 10/11 x64, билд `4879d8511301`.
+Поддерживаемый клиент для v3.2 — Windows 10/11 x64, билд `98a2321a36e9`.
 
 ## Установка
 
@@ -21,4 +21,4 @@
 
 ## Авторы
 
-Установщик, адаптация и технические правки — **Luuke**. Словарь версии 3.1 основан на переводе **Rokonshi v0.9.0**.
+Установщик, адаптация и технические правки — **Luuke**. Словарь версии 3.2 основан на переводе **Rokonshi v0.9.0**.
