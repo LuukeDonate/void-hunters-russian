@@ -1,0 +1,63 @@
+name: Publish Void Hunters Russian v3.2
+on:
+  push:
+    branches: [release/v3.2]
+    paths: [.github/workflows/publish-v3.2.yml]
+
+concurrency:
+  group: publish-v3-2
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    permissions:
+      contents: write
+    steps:
+      - name: Rebuild archive from v3.1 and verify updated members
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --location --retry 2 'https://github.com/LuukeDonate/void-hunters-russian/releases/download/v3.1/Void_Hunters_Luuke_Launcher_v3.1.zip' -o prior.zip
+          printf '%s  %s\n' '5561aaad2622cd95cb07a39984d6bc9f6e29a8309c536a2f28fb723aad80f7c0' prior.zip | sha256sum -c -
+          python3 - <<'PYTHON'
+          from base64 import b64decode
+          from hashlib import sha256
+          from zipfile import ZipFile
+
+          patches = {'VoidHuntersRussian/pilot.json': [[(146, 338, 'ICAiY2xpZW50X21hbmlmZXN0X2hhc2giOiAiOThhMjMyMWEzNmU5NTgxNjFiMDg5NDBmZmUwMjE3NWIwZWFiNTk0YTg3MmIwNzI5MTUxMGZiZDFiODRkMjdmNiIsCiAgInNvdXJjZV9zbmFwc2hvdF9yZXZpc2lvbiI6ICJmM2E1OTRjOWYwMjBlOTg4NWEzNjM3ZDM1ODlhMjY0NDM1ODBlYTczYzVlZTRiOTJjMmRmNGRjMjM0OWQ5ODg0IiwK')], '47011d848a6f8ecd51f51dccb723752f3310b1a6ce92b362d9d10b99fff06fa7'], 'VoidHuntersRussian/installer.py': [[(350, 406, 'TUVUQSA9ICdtZXRhXzliZWM5MDYzZjlmMmMxZGQ4YjdmMjJiMGFlMzY3NTg1LnJlc291cmNlJwo='), (497, 655, 'ICAgICdnYW1lJzogJ2ExZjg2MDMxZTYzMTk3NGM1YWQ2Yjg2MWRmNzFmYWFmN2MwZWMxYWNlMWY1ZDNjMjA5OGVmYWM5MTY1ZTllOTgnLAogICAgJ3VpJzogJ2QyMjI2NWQ0ZWNkODUwZjRjNzViYTU3ZDRlYmE5YWE4ZDVmNmVkZTc4ZjIwOTBhNTFkZmZiZGM4NzBkYzg3ZWInLAo=')], '714a710547f56084321254875fab471ca1667a32629c3fd89357f7652df90062'], 'VoidHuntersRussian/comparison.json': [[(21028, 21028, 'ICBdLAogICJsdXVrZV92M18yX3VpX2FkZGl0aW9ucyI6IFsKICAgIHsKICAgICAgImtleSI6ICJVSV9DQU1QQUlHTk9OR09JTkdFWFBMT1JBVElPTlNDUkVFTl9BQ1RJVkVIVU5UTkFNRUFORExFVkVMIiwKICAgICAgInNvdXJjZSI6ICIkKEh1bnRpbmdHcm91bmRzTmFtZSkgTHYuJChMZXZlbCkiLAogICAgICAicnUiOiAiJChIdW50aW5nR3JvdW5kc05hbWUpINGD0YAuICQoTGV2ZWwpIgogICAgfSwKICAgIHsKICAgICAgImtleSI6ICJVSV9FWFBMT1JBVElPTkhFQUxUSFBST01QVF9ORUdBVElWRSIsCiAgICAgICJzb3VyY2UiOiAiPHN0eWxlPUJvbGRDb21wYXJlUmVkPiQoVmFsMSk8L3N0eWxlPiBIUCIsCiAgICAgICJydSI6ICI8c3R5bGU9Qm9sZENvbXBhcmVSZWQ+JChWYWwxKTwvc3R5bGU+INCe0JciCiAgICB9LAogICAgewogICAgICAia2V5IjogIlVJX0VYUExPUkFUSU9OSEVBTFRIUFJPTVBUX1BPU0lUSVZFIiwKICAgICAgInNvdXJjZSI6ICI8c3R5bGU9Qm9sZENvbXBhcmVHcmVlbj4rJChWYWwxKTwvc3R5bGU+IEhQIiwKICAgICAgInJ1IjogIjxzdHlsZT1Cb2xkQ29tcGFyZUdyZWVuPiskKFZhbDEpPC9zdHlsZT4g0J7QlyIKICAgIH0K')], 'f7f59dc2e90d0bf622ed344392ecfb1c8e56c534b0fef312cf19f28d755b1298'], 'VoidHuntersRussian/community_translation.json': [[(3468568, 3468571, 'LHsic2VjdGlvbiI6InVpIiwia2V5IjoiVUlfQ0FNUEFJR05PTkdPSU5HRVhQTE9SQVRJT05TQ1JFRU5fQUNUSVZFSFVOVE5BTUVBTkRMRVZFTCIsInNvdXJjZV9zaGEyNTYiOiI1OGNlMmMzM2Y2YTVjMjIxZWZiNmQ1MzliNGJlNzg3Y2VkYzc5YzI5OTJlZWU3ZDA2NzcyMjUwMGNmYzgyMTk0IiwicnUiOiIkKEh1bnRpbmdHcm91bmRzTmFtZSkg0YPRgC4gJChMZXZlbCkiLCJzdGF0dXMiOiJhcHByb3ZlZCJ9LHsic2VjdGlvbiI6InVpIiwia2V5IjoiVUlfRVhQTE9SQVRJT05IRUFMVEhQUk9NUFRfTkVHQVRJVkUiLCJzb3VyY2Vfc2hhMjU2IjoiMjZhMTQxMGYwN2RjODY5M2YyM2E3N2RkMTNhNGIzOTQ4ZWMzZjcxMTBiNWMwNmExOTA5MmIwMzJhZTkwODI2MCIsInJ1IjoiPHN0eWxlPUJvbGRDb21wYXJlUmVkPiQoVmFsMSk8L3N0eWxlPiDQntCXIiwic3RhdHVzIjoiYXBwcm92ZWQifSx7InNlY3Rpb24iOiJ1aSIsImtleSI6IlVJX0VYUExPUkFUSU9OSEVBTFRIUFJPTVBUX1BPU0lUSVZFIiwic291cmNlX3NoYTI1NiI6IjkwZDEyNDRhMTUwZWUzOGIyNzA5YTg2ODgxYTcxMDkxZDY0NTQzNzJiNzZjY2IyODZmOTcxNGY3MTA2ZWVlNjYiLCJydSI6IjxzdHlsZT1Cb2xkQ29tcGFyZUdyZWVuPiskKFZhbDEpPC9zdHlsZT4g0J7QlyIsInN0YXR1cyI6ImFwcHJvdmVkIn1dfQ==')], '289e01e95c6ab6b9e21697656a8621fc07cd1889b9f639205b6767ba39b056a6'], 'VoidHuntersRussian/README.txt': [[(45, 151, '0JLQtdGA0YHQuNGPIDMuMiDCtyBXaW5kb3dzIDEwLzExIHg2NArQn9C+0LTQtNC10YDQttC40LLQsNC10LzRi9C5INCx0LjQu9C0INC60LvQuNC10L3RgtCwOiA5OGEyMzIxYTM2ZTkuCg=='), (1523, 1723, '0JIg0YHQsdC+0YDQutC1IDExIDUxMyDQv9C10YDQtdCy0LXQtNGR0L3QvdGL0YUg0YHRgtGA0L7Qui4g0KLQtdC60YHRgtGLINC60LvQuNC10L3RgtCwINGB0L7QstC/0LDQtNCw0Y7RgiDRgSDQv9GA0LXQtNGL0LTRg9GJ0LjQvCDQsdC40LvQtNC+0LwuINCY0YHRgtC+0YfQvdC40Log0L/QtdGA0LXQstC+0LTQsCDigJQgUm9rb25zaGkgdjAuOS4wLgo='), (1965, 2260, '0KMg0L/RgNC40LvQvtC20LXQvdC40Y8g0L/QvtC60LAg0L3QtdGCINC/0L7QtNC/0LjRgdC4INC40LfQtNCw0YLQtdC70Y8uINCj0YHRgtCw0L3QvtCy0LrQsCDQuCDQstC+0YHRgdGC0LDQvdC+0LLQu9C10L3QuNC1INC/0YDQvtCy0LXRgNC10L3RiyDQvdCwIFdpbmRvd3Mg0YEg0L7QsdC90L7QstC70ZHQvdC90YvQvCDQutC70LjQtdC90YLQvtC8Lgo=')], '9d87fef75b3d66a81aa796b76b65d9cd93edb334db78e25dd03111b48e8d765d']}
+
+          archive = 'Void_Hunters_Luuke_Launcher_v3.2.zip'
+          with ZipFile('prior.zip') as source, ZipFile(archive, 'w') as output:
+              for item in source.infolist():
+                  data = source.read(item)
+                  if item.filename in patches:
+                      edits, expected = patches[item.filename]
+                      for start, end, replacement in reversed(edits):
+                          data = data[:start] + b64decode(replacement) + data[end:]
+                      if sha256(data).hexdigest() != expected:
+                          raise ValueError(f'Unexpected output for {item.filename}')
+                  output.writestr(item, data)
+          with ZipFile(archive) as output:
+              if output.testzip() is not None or not set(patches).issubset(output.namelist()):
+                  raise ValueError('Invalid release archive')
+          PYTHON
+      - name: Publish GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat > release-notes.md <<'NOTES'
+          Русификатор для ПК-версии Void Hunters, Windows 10/11 x64.
+
+          - Поддержка клиента с манифестом `98a2321a36e9`.
+          - Переведены уровень охоты и две подсказки здоровья.
+          - Установка и восстановление исходных файлов проверены на обновлённом клиенте Windows.
+
+          Скачайте ZIP, распакуйте архив целиком и откройте `Luuke-Void-Hunters.exe`. Перед установкой закройте игру и официальный лаунчер.
+
+          Установщик и технические правки — **Luuke**. Словарь основан на переводе **Rokonshi v0.9.0**.
+          NOTES
+          sha256sum Void_Hunters_Luuke_Launcher_v3.2.zip >> release-notes.md
+          gh release create v3.2 Void_Hunters_Luuke_Launcher_v3.2.zip --repo "$GITHUB_REPOSITORY" --target main --title 'Void Hunters — Русификатор Luuke v3.2' --notes-file release-notes.md --draft
+          gh release edit v3.2 --repo "$GITHUB_REPOSITORY" --draft=false --latest
